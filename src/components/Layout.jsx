@@ -35,8 +35,10 @@ const Layout = ({ children }) => {
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                    <Link to="/" className="hover:opacity-80 transition-opacity">
-                        <img src={logo} alt="Mark Gandara" className="h-10 w-auto" />
+                    <Link to="/" className="text-2xl font-bold tracking-wider hover:opacity-80 transition-opacity font-[Rajdhani] uppercase flex items-center gap-2">
+                        <Terminal size={24} className="text-primary" />
+                        <span className="text-white">MARK</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">GANDARA</span>
                     </Link>
 
                     {/* Desktop Nav */}

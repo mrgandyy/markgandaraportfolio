@@ -8,6 +8,7 @@ import CyberpunkBackground from '../components/CyberpunkBackground';
 import GlitchText from '../components/GlitchText';
 import ContactForm from '../components/ContactForm';
 import profileImg from '../assets/profile.jpg';
+import logo from '../assets/logo.png';
 import '@fontsource/rajdhani/400.css';
 import '@fontsource/rajdhani/600.css';
 import '@fontsource/rajdhani/700.css';
@@ -20,43 +21,62 @@ const Home = () => {
 
             {/* Hero Section */}
             <section className="min-h-screen flex flex-col justify-center px-6 max-w-7xl mx-auto relative">
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="max-w-4xl z-10"
-                >
-                    <div className="flex items-center gap-2 mb-4 text-primary font-mono text-sm tracking-[0.2em]">
-                        <span className="w-2 h-2 bg-primary animate-pulse" />
-                        SYSTEM_ONLINE
-                    </div>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-12 z-10">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="max-w-4xl"
+                    >
+                        <div className="flex items-center gap-2 mb-4 text-primary font-mono text-sm tracking-[0.2em]">
+                            <span className="w-2 h-2 bg-primary animate-pulse" />
+                            SYSTEM_ONLINE
+                        </div>
 
-                    <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 font-[Rajdhani] uppercase tracking-tighter">
-                        <GlitchText text="Immersive" /> <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                            Simulations
-                        </span>
-                    </h1>
+                        <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 font-[Rajdhani] uppercase tracking-tighter">
+                            <GlitchText text="Immersive" /> <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                                Simulations
+                            </span>
+                        </h1>
 
-                    <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl leading-relaxed font-light border-l-2 border-primary/30 pl-6">
-                        Unity & XR Engineer designing performance-critical <span className="text-primary">social VR worlds</span> and scalable systems.
-                    </p>
+                        <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl leading-relaxed font-light border-l-2 border-primary/30 pl-6">
+                            Unity & XR Engineer designing performance-critical <span className="text-primary">social VR worlds</span> and scalable systems.
+                        </p>
 
-                    <div className="flex flex-wrap gap-4">
-                        <a
-                            href="#work"
-                            className="px-8 py-4 bg-primary text-black font-bold text-lg hover:bg-white hover:scale-105 transition-all flex items-center gap-2 skew-x-[-10deg]"
-                        >
-                            <span className="skew-x-[10deg] flex items-center gap-2">View Work <ArrowRight size={20} /></span>
-                        </a>
-                        <a
-                            href="#contact"
-                            className="px-8 py-4 border border-primary/50 text-primary font-bold text-lg hover:bg-primary/10 transition-all skew-x-[-10deg]"
-                        >
-                            <span className="skew-x-[10deg]">Initiate Contact</span>
-                        </a>
-                    </div>
-                </motion.div>
+                        <div className="flex flex-wrap gap-4">
+                            <a
+                                href="#work"
+                                className="px-8 py-4 bg-primary text-black font-bold text-lg hover:bg-white hover:scale-105 transition-all flex items-center gap-2 skew-x-[-10deg]"
+                            >
+                                <span className="skew-x-[10deg] flex items-center gap-2">View Work <ArrowRight size={20} /></span>
+                            </a>
+                            <a
+                                href="#contact"
+                                className="px-8 py-4 border border-primary/50 text-primary font-bold text-lg hover:bg-primary/10 transition-all skew-x-[-10deg]"
+                            >
+                                <span className="skew-x-[10deg]">Initiate Contact</span>
+                            </a>
+                        </div>
+                    </motion.div>
+
+                    {/* Floating Hero Logo */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                        className="hidden md:block relative w-64 h-64 lg:w-96 lg:h-96"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse" />
+                        <img
+                            src={logo}
+                            alt="MG Logo"
+                            className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(0,243,255,0.5)]"
+                        />
+                        <div className="absolute inset-0 border border-white/10 rounded-full animate-spin-slow" />
+                        <div className="absolute -inset-4 border border-primary/20 rounded-full border-dashed animate-reverse-spin" />
+                    </motion.div>
+                </div>
             </section>
 
             {/* Selected Work */}
