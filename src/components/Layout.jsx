@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.png';
 import { Menu, X, Github, Mail, Terminal } from 'lucide-react';
 
 const Layout = ({ children }) => {
@@ -29,14 +30,13 @@ const Layout = ({ children }) => {
 
             <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${isScrolled
-                        ? 'bg-background/90 backdrop-blur-md border-primary/20 py-3'
-                        : 'bg-transparent border-transparent py-6'
+                    ? 'bg-background/90 backdrop-blur-md border-primary/20 py-3'
+                    : 'bg-transparent border-transparent py-6'
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                    <Link to="/" className="text-xl font-bold tracking-widest hover:text-primary transition-colors font-mono flex items-center gap-2">
-                        <Terminal size={20} className="text-primary" />
-                        MARK_GANDARA
+                    <Link to="/" className="hover:opacity-80 transition-opacity">
+                        <img src={logo} alt="Mark Gandara" className="h-10 w-auto" />
                     </Link>
 
                     {/* Desktop Nav */}
