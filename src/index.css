@@ -1,37 +1,25 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
-  --color-background: #050510;
-  --color-surface: #0a0a1f;
-  --color-primary: #00f3ff;
-  --color-secondary: #bc13fe;
-  --color-text: #e0e0e0;
-  --color-muted: #8080a0;
-  --font-sans: 'Rajdhani', 'Inter', sans-serif;
-  --font-mono: 'Share Tech Mono', monospace;
-
-  --animate-glitch: glitch 1s linear infinite;
-
-  @keyframes glitch {
-
-    2%,
-    64% {
-      transform: translate(2px, 0) skew(0deg);
-    }
-
-    4%,
-    60% {
-      transform: translate(-2px, 0) skew(0deg);
-    }
-
-    62% {
-      transform: translate(0, 0) skew(5deg);
-    }
-  }
+  --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-primary: #ffffff;
+  --color-secondary: #a1a1aa;
+  --color-text: #ffffff;
+  --color-muted: #52525b;
+  --color-gold-400: #FACC15;
+  --color-gold-500: #EAB308;
+  --color-gold-600: #CA8A04;
+  --color-amber-400: #FBBF24;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 :root {
-  font-family: 'Rajdhani', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -52,33 +40,48 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
-/* Cyberpunk Scrolls */
+::selection {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   background: var(--color-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface);
-  border: 1px solid var(--color-primary);
+  background: #27272a;
+  border-radius: 4px;
 }
 
-/* Scanline Effect */
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0) 50%,
-      rgba(0, 0, 0, 0.2) 50%,
-      rgba(0, 0, 0, 0.2));
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.15;
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  box-shadow: 0 10px 40px -10px rgba(250, 204, 21, 0.2);
+  transform: translateY(-4px);
 }

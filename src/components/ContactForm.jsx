@@ -1,118 +1,124 @@
 import React, { useState, useRef } from 'react';
-import { Send, AlertTriangle, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const ContactForm = () => {
     const form = useRef();
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
-    // Credentials provided by user
-    const SERVICE_ID = "m.gandara10";
-    const TEMPLATE_ID = "template_ji962dc";
-    const PUBLIC_KEY = "I-v6RhFJIIkyW-OGc";
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus('submitting');
 
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
-            .then((result) => {
-                console.log(result.text);
-                setStatus('success');
-            }, (error) => {
-                console.log(error.text);
-                setStatus('error');
+        const formData = new FormData(form.current);
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/m.gandara10@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Accept': 'application/json'
+                },
+                body: formData
             });
+
+            if (response.ok) {
+                setStatus('success');
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+        }
     };
 
     return (
-        <div className="bg-surface/30 border border-primary/20 p-8 backdrop-blur-md relative overflow-hidden group">
-            {/* HUD Corners */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary" />
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary" />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary" />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary" />
-
+        <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
             {/* Header */}
-            <div className="mb-8 border-b border-white/10 pb-4">
-                <h3 className="text-2xl font-[Rajdhani] uppercase font-bold text-white flex items-center gap-2">
-                    <Send size={20} className="text-primary" /> Initiate Transmisison
-                </h3>
-                <p className="text-primary/70 font-mono text-xs tracking-widest mt-1">
-                    SECURE_CHANNEL // TARGET: m.gandara10@gmail.com
+            <div className="mb-10 text-center">
+                <h3 className="text-3xl font-semibold text-white mb-3">Let's build something.</h3>
+                <p className="text-secondary">
+                    Open for opportunities, consulting, and collaboration.
                 </p>
             </div>
 
             {status === 'success' ? (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-12"
-                >
-                    <CheckCircle size={48} className="text-primary mx-auto mb-4" />
-                    <h4 className="text-xl font-bold text-white mb-2">TRANSMISSION RECEIVED</h4>
-                    <p className="text-gray-400 font-mono text-sm">Stand by for response sequence.</p>
+                <div className="text-center py-16 animate-fade-in-up">
+                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle size={32} className="text-white" />
+                    </div>
+                    <h4 className="text-2xl font-semibold text-white mb-3">Message sent</h4>
+                    <p className="text-secondary mb-8">Thanks for reaching out. I'll get back to you shortly.</p>
                     <button
                         onClick={() => setStatus('idle')}
-                        className="mt-6 text-primary hover:text-white underline text-sm font-mono tracking-widest uppercase"
+                        className="text-white hover:text-gray-300 font-medium text-sm transition-colors"
                     >
-                        Send Another Message
+                        Send another message
                     </button>
-                </motion.div>
+                </div>
             ) : (
-                <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+                <form ref={form} onSubmit={handleSubmit} className="space-y-6 animate-fade-in">
+                    {/* formsubmit configuration */}
+                    <input type="hidden" name="_subject" value="New Portfolio Inquiry!" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-xs font-mono text-primary uppercase tracking-widest block">User_Name</label>
+                            <label className="text-sm font-medium text-secondary">Name</label>
                             <input
                                 type="text"
-                                name="user_name"
+                                name="name"
                                 required
-                                className="w-full bg-black/40 border border-white/10 p-3 text-white focus:border-primary focus:outline-none focus:bg-primary/5 transition-all font-mono text-sm"
-                                placeholder="ENTER_ID"
+                                className="w-full bg-surface border border-surfaceBorder rounded-lg p-4 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
+                                placeholder="Jane Doe"
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-mono text-primary uppercase tracking-widest block">Comms_Link</label>
+                            <label className="text-sm font-medium text-secondary">Email</label>
                             <input
                                 type="email"
-                                name="user_email"
+                                name="email"
                                 required
-                                className="w-full bg-black/40 border border-white/10 p-3 text-white focus:border-primary focus:outline-none focus:bg-primary/5 transition-all font-mono text-sm"
-                                placeholder="EMAIL_ADDRESS"
+                                className="w-full bg-surface border border-surfaceBorder rounded-lg p-4 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all"
+                                placeholder="jane@example.com"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-xs font-mono text-primary uppercase tracking-widest block">Data_Packet</label>
+                        <label className="text-sm font-medium text-secondary">Message</label>
                         <textarea
                             name="message"
-                            rows="4"
+                            rows="5"
                             required
-                            className="w-full bg-black/40 border border-white/10 p-3 text-white focus:border-primary focus:outline-none focus:bg-primary/5 transition-all font-mono text-sm resize-none"
-                            placeholder="ENTER_MESSAGE_CONTENTS..."
+                            className="w-full bg-surface border border-surfaceBorder rounded-lg p-4 text-white focus:border-white focus:ring-1 focus:ring-white outline-none transition-all resize-none"
+                            placeholder="Tell me about your project..."
                         />
                     </div>
 
                     {status === 'error' && (
-                        <div className="text-red-500 text-sm font-mono flex items-center gap-2">
-                            <AlertTriangle size={14} /> TRANSMISSION FAILED. CHECK NETWORK OR CONFIG.
+                        <div className="text-red-400 text-sm flex items-center gap-2 bg-red-400/10 p-3 rounded-lg border border-red-400/20">
+                            <AlertCircle size={16} /> Failed to send message. Please try again or email directly.
                         </div>
                     )}
 
                     <button
                         type="submit"
                         disabled={status === 'submitting'}
-                        className="w-full py-4 bg-primary/20 border border-primary text-primary font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                        className="w-full py-4 bg-white text-black font-medium rounded-lg hover:bg-gray-200 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {status === 'submitting' ? (
-                            <span className="animate-pulse">UPLOADING...</span>
+                            <span className="flex items-center gap-2">
+                                <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Sending...
+                            </span>
                         ) : (
-                            <span className="relative z-10">TRANSMIT DATA</span>
+                            <>
+                                Send Message <Send size={18} />
+                            </>
                         )}
-                        <div className="absolute inset-0 bg-primary/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-0" />
                     </button>
                 </form>
             )}
@@ -121,3 +127,4 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+

@@ -1,229 +1,438 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Database, Terminal, Shield } from 'lucide-react';
-import { worlds } from '../data/worlds';
-import { systems, webProjects } from '../data/systems';
+import { ArrowRight, ChevronRight, Briefcase, Code, Shield, Users, Layers, Activity, PlayCircle, ExternalLink, Database, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import CyberpunkBackground from '../components/CyberpunkBackground';
-import GlitchText from '../components/GlitchText';
+import { impactMetrics, experience, creativeTech, fullStackProjects, customSoftware, caseStudies, skills } from '../data/portfolioData';
 import ContactForm from '../components/ContactForm';
-import profileImg from '../assets/profile.jpg';
-import logo from '../assets/logo.png';
-import '@fontsource/rajdhani/400.css';
-import '@fontsource/rajdhani/600.css';
-import '@fontsource/rajdhani/700.css';
-import '@fontsource/share-tech-mono';
+import profilePic from '../assets/profile.jpg';
+
+const Particles = () => {
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            {[...Array(30)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-gold-500/30 rounded-full"
+                    initial={{
+                        x: Math.random() * 2000 - 500,
+                        y: Math.random() * 2000 - 500,
+                        scale: Math.random() * 2 + 0.5
+                    }}
+                    animate={{
+                        y: [null, Math.random() * -500 - 200],
+                        opacity: [0, 0.8, 0],
+                        scale: [null, Math.random() * 2 + 1]
+                    }}
+                    transition={{
+                        duration: Math.random() * 10 + 15,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }}
+                />
+            ))}
+        </div>
+    );
+};
 
 const Home = () => {
     return (
-        <div className="pb-20 relative overflow-hidden">
-            <CyberpunkBackground />
-
+        <div className="pb-20 relative overflow-hidden bg-background">
+            <Particles />
+            {/* Cinematic Background Elements with Motion */}
+            <motion.div 
+                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[-5%] left-[-10%] w-[500px] h-[500px] md:w-[800px] md:h-[800px] rounded-full bg-gold-500/20 blur-[100px] md:blur-[150px] pointer-events-none -z-10" 
+            />
+            <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full bg-amber-500/20 blur-[100px] md:blur-[120px] pointer-events-none -z-10" 
+            />
+            
             {/* Hero Section */}
-            <section className="min-h-screen flex flex-col justify-center px-6 max-w-7xl mx-auto relative">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12 z-10">
+            <section className="min-h-[95vh] flex flex-col justify-center px-6 max-w-7xl mx-auto relative pt-20">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-16 z-10">
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="max-w-4xl"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+                        }}
+                        className="lg:w-3/5"
                     >
-                        <div className="flex items-center gap-2 mb-4 text-primary font-mono text-sm tracking-[0.2em]">
-                            <span className="w-2 h-2 bg-primary animate-pulse" />
-                            SYSTEM_ONLINE
-                        </div>
+                        <motion.div 
+                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                            className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full border border-gold-500/30 bg-gradient-to-r from-gold-500/10 to-transparent text-sm font-bold text-gold-400 uppercase tracking-widest backdrop-blur-md shadow-[0_0_30px_rgba(234,179,8,0.1)]"
+                        >
+                            <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse shadow-[0_0_10px_rgba(234,179,8,0.8)]" />
+                            Multidisciplinary Engineering
+                        </motion.div>
 
-                        <h1 className="text-6xl md:text-8xl font-bold leading-none mb-6 font-[Rajdhani] uppercase tracking-tighter">
-                            <GlitchText text="Immersive" /> <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                                Simulations
+                        <motion.h1 
+                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                            className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] mb-6 tracking-tighter text-white"
+                        >
+                            Senior Engineer <br className="hidden md:block" />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-500 to-amber-600">
+                                & Creative Tech
                             </span>
-                        </h1>
+                        </motion.h1>
 
-                        <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl leading-relaxed font-light border-l-2 border-primary/30 pl-6">
-                            Unity & XR Engineer designing performance-critical <span className="text-primary">social VR worlds</span> and scalable systems.
-                        </p>
+                        <motion.p 
+                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                            className="text-xl md:text-2xl text-secondary mb-12 max-w-2xl leading-relaxed font-light"
+                        >
+                            12 years architecting enterprise systems, full-stack ecosystems, creative technology, and immersive products.
+                        </motion.p>
 
-                        <div className="flex flex-wrap gap-4">
+                        <motion.div 
+                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                            className="flex flex-wrap gap-4"
+                        >
                             <a
-                                href="#work"
-                                className="px-8 py-4 bg-primary text-black font-bold text-lg hover:bg-white hover:scale-105 transition-all flex items-center gap-2 skew-x-[-10deg]"
+                                href="#creative-tech"
+                                className="px-8 py-4 bg-gradient-to-r from-gold-500 to-amber-600 text-black rounded-full font-bold text-lg hover:shadow-[0_0_40px_rgba(234,179,8,0.4)] hover:scale-105 transition-all duration-300 flex items-center gap-3"
                             >
-                                <span className="skew-x-[10deg] flex items-center gap-2">View Work <ArrowRight size={20} /></span>
+                                View My Work <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                             </a>
-                            <a
-                                href="#contact"
-                                className="px-8 py-4 border border-primary/50 text-primary font-bold text-lg hover:bg-primary/10 transition-all skew-x-[-10deg]"
-                            >
-                                <span className="skew-x-[10deg]">Initiate Contact</span>
-                            </a>
-                        </div>
+                        </motion.div>
+                        
+                        {/* Premium Callouts */}
+                        <motion.div 
+                            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                            className="mt-16 flex flex-wrap gap-8 md:gap-12 pt-8 border-t border-white/10"
+                        >
+                            <div className="flex flex-col group cursor-default">
+                                <span className="text-white font-bold text-xl group-hover:text-gold-400 transition-colors">12+ Years Experience</span>
+                                <span className="text-secondary text-sm tracking-wide uppercase mt-1">Enterprise Engineering</span>
+                            </div>
+                            <div className="flex flex-col group cursor-default">
+                                <span className="text-white font-bold text-xl group-hover:text-gold-400 transition-colors">Full Stack Ecosystems</span>
+                                <span className="text-secondary text-sm tracking-wide uppercase mt-1">Next.js / Prisma / SaaS</span>
+                            </div>
+                            <div className="flex flex-col group cursor-default">
+                                <span className="text-white font-bold text-xl group-hover:text-gold-400 transition-colors">Real-Time 3D & XR</span>
+                                <span className="text-secondary text-sm tracking-wide uppercase mt-1">Unity / HLSL / Infra</span>
+                            </div>
+                        </motion.div>
                     </motion.div>
 
-                    {/* Floating Hero Logo */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className="hidden md:block relative w-64 h-64 lg:w-96 lg:h-96"
+                    {/* Premium Photo Display */}
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
+                        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                        transition={{ duration: 1, delay: 0.5, type: "spring", stiffness: 50 }}
+                        whileHover={{ scale: 1.02, rotateY: -5, rotateX: 5 }}
+                        className="hidden lg:block lg:w-2/5 relative"
+                        style={{ perspective: "1000px" }}
                     >
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse" />
-                        <img
-                            src={logo}
-                            alt="MG Logo"
-                            className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(0,243,255,0.5)]"
-                        />
-                        <div className="absolute inset-0 border border-white/10 rounded-full animate-spin-slow" />
-                        <div className="absolute -inset-4 border border-primary/20 rounded-full border-dashed animate-reverse-spin" />
+                        <div className="glass-card p-2 rounded-3xl relative z-10 overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <img 
+                                src={profilePic} 
+                                alt="Mark Gandara" 
+                                className="w-full aspect-[4/5] object-cover rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-700"
+                            />
+                        </div>
+                        {/* Glow Behind Photo */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gold-500/20 blur-[100px] -z-10 rounded-full" />
                     </motion.div>
                 </div>
             </section>
 
-            {/* Selected Work */}
-            <section id="work" className="py-20 px-6 max-w-7xl mx-auto relative z-10">
-                <div className="flex justify-between items-end mb-16 border-b border-white/10 pb-4">
-                    <div>
-                        <h2 className="text-4xl font-bold mb-2 font-[Rajdhani] uppercase">Selected Worlds</h2>
-                        <p className="text-primary font-mono text-sm">/// CASE_STUDIES</p>
-                    </div>
+            {/* Creative Technology Flagship */}
+            <section id="creative-tech" className="py-32 px-6 max-w-7xl mx-auto relative z-10 border-t border-white/5">
+                <div className="mb-16">
+                    <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Cpu size={16} /> Creative Technology</h2>
+                    <h3 className="text-4xl font-bold tracking-tight text-white mb-4">Flagship Frameworks</h3>
+                    <p className="text-secondary text-lg max-w-2xl">Bridging the gap between engineering and art with complex, real-time shader frameworks.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {worlds.slice(0, 6).map((world, index) => (
+                {creativeTech.map((tech) => (
+                    <motion.div 
+                        key={tech.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="glass-card rounded-3xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 transition-all duration-500 group"
+                    >
+                        <div className="grid lg:grid-cols-2 gap-0">
+                            <div className="p-10 md:p-16 flex flex-col justify-center">
+                                <h4 className="text-3xl font-bold text-white mb-4">{tech.title}</h4>
+                                <p className="text-gold-400 font-medium mb-6">{tech.role}</p>
+                                <p className="text-secondary text-lg leading-relaxed mb-8">{tech.description}</p>
+                                
+                                <div className="flex flex-wrap gap-2 mb-10">
+                                    {tech.technologies.map(t => (
+                                        <span key={t} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-300">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                                
+                                <a 
+                                    href={tech.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-white font-semibold hover:text-gold-400 transition-colors"
+                                >
+                                    <PlayCircle size={24} className="text-gold-500" /> Watch the Showcase
+                                </a>
+                            </div>
+                            <div className="relative aspect-video lg:aspect-auto">
+                                <iframe 
+                                    src={tech.videoUrl} 
+                                    title={tech.title}
+                                    className="absolute inset-0 w-full h-full border-l border-white/5"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
+            </section>
+
+            {/* Immersive Products & UX */}
+            <section id="case-studies" className="py-32 bg-surface/30 border-y border-white/5 relative z-10 px-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="mb-16">
+                        <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Layers size={16} /> Product Development</h2>
+                        <h3 className="text-4xl font-bold tracking-tight text-white mb-4">Immersive Systems & Infrastructure</h3>
+                        <p className="text-secondary text-lg max-w-2xl">
+                            Real-time 3D environments engineered not as hobby worlds, but as high-performance products and community infrastructure.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-10">
+                        {caseStudies.map((study, index) => (
+                            <motion.div
+                                key={study.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="group relative rounded-2xl overflow-hidden bg-background border border-white/5 hover:border-gold-500/20 transition-all duration-500"
+                            >
+                                <div className="aspect-[16/9] relative overflow-hidden bg-black">
+                                    <video 
+                                        autoPlay 
+                                        loop 
+                                        muted 
+                                        playsInline
+                                        poster={study.image}
+                                        className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-700"
+                                    >
+                                        <source src={study.video} type="video/mp4" />
+                                    </video>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+                                </div>
+                                <div className="p-8 -mt-10 relative z-10">
+                                    <div className="bg-surface border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h4 className="text-2xl font-bold text-white tracking-tight">{study.title}</h4>
+                                        </div>
+                                        <p className="text-gold-400 text-sm font-medium mb-4">{study.role}</p>
+                                        <p className="text-secondary text-sm mb-6 line-clamp-3">{study.description}</p>
+                                        
+                                        <Link
+                                            to={`/project/${study.slug}`}
+                                            className="inline-flex items-center gap-2 text-white font-medium text-sm hover:text-gold-400 transition-colors uppercase tracking-widest"
+                                        >
+                                            Access Case Study <ArrowRight size={16} />
+                                        </Link>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Full Stack & Custom Software Dual Section */}
+            <section className="py-32 px-6 max-w-7xl mx-auto relative z-10">
+                <div className="grid lg:grid-cols-2 gap-16">
+                    {/* Full Stack */}
+                    <div>
+                        <div className="mb-10">
+                            <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Code size={16} /> Web Engineering</h2>
+                            <h3 className="text-3xl font-bold tracking-tight text-white mb-4">Full Stack Ecosystems</h3>
+                            <p className="text-secondary">Production websites and web applications built for scale.</p>
+                        </div>
+                        <div className="space-y-6">
+                            {fullStackProjects.map((project, idx) => (
+                                <a 
+                                    key={idx}
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block p-6 glass-card rounded-xl border border-white/5 hover:border-gold-500/20 transition-all group"
+                                >
+                                    <div className="flex justify-between items-start mb-3">
+                                        <h4 className="text-xl font-bold text-white group-hover:text-gold-400 transition-colors">{project.title}</h4>
+                                        {project.url && <ExternalLink size={18} className="text-secondary group-hover:text-gold-400" />}
+                                    </div>
+                                    <p className="text-secondary text-sm leading-relaxed mb-4">{project.description}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.technologies.map(tech => (
+                                            <span key={tech} className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded">{tech}</span>
+                                        ))}
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Custom Software */}
+                    <div>
+                        <div className="mb-10">
+                            <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2 flex items-center gap-2"><Database size={16} /> Systems Architecture</h2>
+                            <h3 className="text-3xl font-bold tracking-tight text-white mb-4">Custom Software & Bots</h3>
+                            <p className="text-secondary">Automated pipelines, Discord bots, and internal tools.</p>
+                        </div>
+                        <div className="space-y-6">
+                            {customSoftware.map((software, idx) => (
+                                <div key={idx} className="p-6 glass-card rounded-xl border border-white/5">
+                                    <h4 className="text-xl font-bold text-white mb-3">{software.title}</h4>
+                                    <p className="text-secondary text-sm leading-relaxed mb-4">{software.description}</p>
+                                    <div className="mb-4">
+                                        <span className="text-xs font-bold text-gold-500 uppercase tracking-widest block mb-2">Key Features</span>
+                                        <ul className="grid grid-cols-2 gap-2">
+                                            {software.features.map(f => (
+                                                <li key={f} className="text-sm text-gray-300 flex items-center gap-2">
+                                                    <span className="w-1 h-1 bg-gold-500 rounded-full" /> {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                                        {software.technologies.map(tech => (
+                                            <span key={tech} className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded">{tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Experience Section */}
+            <section id="experience" className="py-32 px-6 max-w-7xl mx-auto relative z-10 border-t border-white/5">
+                <div className="mb-16 text-center max-w-3xl mx-auto">
+                    <h2 className="text-sm font-bold text-gold-500 uppercase tracking-widest mb-2"><Briefcase className="inline mr-2" size={16} /> Professional Background</h2>
+                    <h3 className="text-4xl font-bold tracking-tight text-white mb-4">12 Years of Defense Engineering</h3>
+                    <p className="text-secondary text-lg">
+                        Over a decade of delivering mission-critical enterprise systems, driving process automation, and leading cross-functional engineering initiatives.
+                    </p>
+                </div>
+
+                <div className="space-y-12">
+                    {experience.map((job, index) => (
                         <motion.div
-                            key={world.id}
+                            key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="group relative bg-surface/50 backdrop-blur-sm rounded-none border border-white/10 hover:border-primary transition-all duration-300"
+                            className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden"
                         >
-                            {/* Corner Accents */}
-                            <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                            <div className="aspect-video bg-black/50 relative overflow-hidden">
-                                <img
-                                    src={world.image}
-                                    alt={world.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100 grayscale group-hover:grayscale-0"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-                                <div className="absolute bottom-4 left-4 right-4">
-                                    <h3 className="text-2xl font-bold text-white mb-1 font-[Rajdhani] uppercase">{world.title}</h3>
-                                    <span className="text-xs font-mono text-primary uppercase tracking-wider bg-primary/10 px-2 py-1">{world.role}</span>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full blur-3xl" />
+                            
+                            <div className="flex flex-col md:flex-row gap-8 relative z-10">
+                                <div className="md:w-1/3 shrink-0">
+                                    <h3 className="text-3xl font-bold text-white mb-2">{job.company}</h3>
+                                    <p className="text-gold-400 font-medium">{job.period}</p>
                                 </div>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-gray-400 text-sm mb-6 line-clamp-2 font-mono h-[3em]">{world.description}</p>
-                                <Link
-                                    to={`/world/${world.slug}`}
-                                    className="block w-full py-2 text-center border border-white/20 hover:bg-primary hover:text-black hover:border-primary transition-all font-bold uppercase tracking-widest text-sm"
-                                >
-                                    Access Data
-                                </Link>
+                                <div className="md:w-2/3">
+                                    <h4 className="text-xl font-bold text-white mb-4">{job.role}</h4>
+                                    <p className="text-secondary text-lg mb-8 leading-relaxed">{job.description}</p>
+                                    <ul className="grid sm:grid-cols-2 gap-4">
+                                        {job.highlights.map((highlight, idx) => (
+                                            <li key={idx} className="flex items-start gap-3 text-sm text-gray-300">
+                                                <ChevronRight size={16} className="text-gold-500 mt-0.5 shrink-0" />
+                                                <span className="leading-relaxed">{highlight}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         </motion.div>
                     ))}
                 </div>
             </section>
 
-            {/* Systems Engineering */}
-            <section id="systems" className="py-20 border-y border-white/5 bg-black/30 relative z-10">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="mb-16">
-                        <h2 className="text-4xl font-bold mb-4 font-[Rajdhani] uppercase flex items-center gap-3">
-                            <Database className="text-primary" /> Systems Engineering
-                        </h2>
-                        <p className="text-gray-400 text-lg max-w-2xl font-light">
-                            Architecting scalable systems involved in complex synchronization and performance challenges.
+            {/* Skills */}
+            <section className="py-32 bg-surface/30 border-y border-white/5 relative z-10 px-6">
+                <div className="max-w-7xl mx-auto">
+                    <div className="mb-16 text-center">
+                        <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">Multidisciplinary Arsenal</h2>
+                        <p className="text-secondary text-lg max-w-2xl mx-auto">
+                            A comprehensive engineering toolkit spanning full-stack development, scalable database architecture, and technical product leadership.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {systems.map((system) => (
-                            <div
-                                key={system.id}
-                                className="p-8 bg-surface/40 border border-white/5 hover:border-secondary/50 transition-all hover:bg-surface/60 group"
-                            >
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="bg-secondary/10 p-3 rounded-none text-secondary">
-                                        <Terminal size={24} />
-                                    </div>
-                                    <span className="font-mono text-xs text-secondary/50 group-hover:text-secondary transition-colors">SYS_ID: {system.id}</span>
-                                </div>
-                                <h3 className="text-2xl font-bold mb-2 font-[Rajdhani]">{system.title}</h3>
-                                <p className="text-gray-300 mb-4 font-mono text-sm">{system.description}</p>
-                                <div className="h-px w-full bg-gradient-to-r from-secondary/50 to-transparent my-4" />
-                                <p className="text-sm text-gray-500">{system.details}</p>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {Object.entries(skills).map(([category, skillList], index) => (
+                            <div key={category} className="p-8 glass-card rounded-2xl hover:border-gold-500/20 transition-colors">
+                                <h3 className="text-lg font-bold text-white mb-6 border-b border-white/10 pb-4">{category}</h3>
+                                <ul className="space-y-3">
+                                    {skillList.map(skill => (
+                                        <li key={skill} className="text-secondary flex items-center gap-3">
+                                            <span className="w-1.5 h-1.5 bg-gold-500/50 rounded-full" />
+                                            {skill}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Web & Platforms */}
-            <section className="py-20 px-6 max-w-7xl mx-auto relative z-10">
-                <h2 className="text-4xl font-bold mb-12 font-[Rajdhani] uppercase">Web & Platforms</h2>
-                <div className="grid md:grid-cols-2 gap-8">
-                    {webProjects.map((project) => (
-                        <a
-                            key={project.id}
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group block p-8 bg-surface/30 border border-white/10 hover:border-primary transition-all hover:translate-x-2"
-                        >
-                            <div className="flex justify-between items-start mb-4">
-                                <h3 className="text-2xl font-bold group-hover:text-primary transition-colors font-[Rajdhani]">{project.title}</h3>
-                                <ArrowRight className="text-gray-500 group-hover:text-primary group-hover:rotate-[-45deg] transition-all" />
-                            </div>
-                            <p className="text-gray-400 mb-6 font-mono text-sm">{project.description}</p>
-                            <div className="flex gap-4 text-xs font-mono text-primary/70">
-                                <span>[{project.role}]</span>
-                            </div>
-                        </a>
-                    ))}
+            {/* Thought Process */}
+            <section id="process" className="py-32 px-6 max-w-4xl mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl font-bold tracking-tight mb-6 text-white">Engineering Philosophy</h2>
+                    <p className="text-xl text-secondary leading-relaxed font-light">
+                        My approach to delivering business value through scalable architecture, rigorous performance optimization, and intuitive product design.
+                    </p>
                 </div>
-            </section>
 
-            {/* About Section */}
-            <section id="about" className="py-20 px-6 max-w-4xl mx-auto text-center relative z-10">
-                <div className="inline-block p-1 border border-primary/30 rounded-full mb-8">
-                    <div className="px-6 py-2 bg-primary/10 rounded-full text-primary font-mono text-sm">
-                        USER_PROFILE
+                <div className="space-y-12">
+                    <div className="flex gap-6">
+                        <div className="mt-1 bg-white/10 p-3 rounded-xl h-fit text-white border border-white/5">
+                            <Activity size={24} className="text-gold-500" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white mb-2">Systems Level Thinking</h3>
+                            <p className="text-secondary leading-relaxed">I don't just write code; I architect systems. Whether it's managing complex database schemas for enterprise tools, designing high-availability APIs, or optimizing draw calls in real-time 3D applications, I analyze the entire product lifecycle to guarantee performance, scalability, and maintainability.</p>
+                        </div>
                     </div>
-                </div>
-
-                {/* Profile Image with Cyberpunk Frame */}
-                <div className="relative w-48 h-48 mx-auto mb-8 group">
-                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all duration-500" />
-                    <div className="relative w-full h-full rounded-full border-2 border-primary/50 overflow-hidden p-1">
-                        <img
-                            src={profileImg}
-                            alt="Mark Gandara"
-                            className="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-500"
-                        />
+                    <div className="flex gap-6">
+                        <div className="mt-1 bg-white/10 p-3 rounded-xl h-fit text-white border border-white/5">
+                            <Users size={24} className="text-gold-500" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white mb-2">Human-Centered Design</h3>
+                            <p className="text-secondary leading-relaxed">Software only delivers business value if it is adopted by users. I bridge the gap between deep technical implementation and intuitive UI/UX. Drawing on my extensive experience with Technical Writing and Simplified Technical English (STE), I ensure complex systems are accessible and friction-free.</p>
+                        </div>
                     </div>
-                    {/* HUD Rings */}
-                    <div className="absolute -inset-2 border border-primary/30 rounded-full border-dashed animate-spin-slow pointer-events-none" />
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-bold mb-8 font-[Rajdhani] uppercase">About Me</h2>
-                <p className="text-xl text-gray-400 leading-relaxed mb-12 font-light">
-                    I approach development with a product-first mindset, focusing on systems that scale, perform reliably under constraint, and remain maintainable over time. Whether working in Unity or on the web, my goal is to ship solutions that solve real problems and support real users.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
-                    {['Unity', 'C#', 'UdonSharp', 'React', 'Performance Profiling', 'Technical Art', 'Team Leadership'].map(skill => (
-                        <span key={skill} className="px-6 py-3 border border-white/10 hover:border-primary/50 bg-surface/50 text-sm font-bold text-gray-300 hover:text-primary transition-colors uppercase tracking-wider">
-                            {skill}
-                        </span>
-                    ))}
+                    <div className="flex gap-6">
+                        <div className="mt-1 bg-white/10 p-3 rounded-xl h-fit text-white border border-white/5">
+                            <Shield size={24} className="text-gold-500" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white mb-2">Robust Reliability</h3>
+                            <p className="text-secondary leading-relaxed">Over a decade of engineering in defense and enterprise environments has instilled a profound prioritization of security, compliance, and zero-downtime architecture. I build platforms—whether web applications, internal automation tools, or community infrastructure—that are designed to scale and remain secure under pressure.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             {/* Contact Section */}
-            <section id="contact" className="py-20 px-6 max-w-3xl mx-auto relative z-10">
+            <section id="contact" className="py-32 px-6 max-w-3xl mx-auto relative z-10">
                 <ContactForm />
             </section>
         </div>
@@ -231,3 +440,4 @@ const Home = () => {
 };
 
 export default Home;
+
