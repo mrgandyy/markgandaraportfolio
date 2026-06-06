@@ -12,7 +12,7 @@ const ContactForm = () => {
         const formData = new FormData(form.current);
 
         try {
-            const response = await fetch("https://formsubmit.co/ajax/m.gandara10@gmail.com", {
+            const response = await fetch("https://formsubmit.co/ajax/8edf6bc878f3f8ad8849aa33fbc3cea9", {
                 method: "POST",
                 headers: { 
                     'Accept': 'application/json'
